@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.apphatchery.training.Message
 import org.apphatchery.training.databinding.ActivityMainItemBinding
+import org.apphatchery.training.domain.model.Message
 
 class MainAdapter : ListAdapter<Message, MainAdapter.ViewHolder>(differ) {
 
@@ -26,11 +26,10 @@ class MainAdapter : ListAdapter<Message, MainAdapter.ViewHolder>(differ) {
 
     inner class ViewHolder(private val binding: ActivityMainItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(message: Message) {
-            with(binding){
-                tvTiltle.text = message.username
-                tvMsgPreview.text = message.message
-            }
+
+        fun onBind(message: Message) = binding.apply {
+            this.message = message
+            executePendingBindings()
         }
     }
 
