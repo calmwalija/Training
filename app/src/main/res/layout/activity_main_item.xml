@@ -1,72 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="message"
+            type="org.apphatchery.training.domain.model.Message" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="4dp">
 
 
         <ImageView
             android:id="@+id/img_profile"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            setImage="@{message.avatar}"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/user" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/user" />
 
         <TextView
             android:id="@+id/tv_tiltle"
-            android:layout_width="wrap_content"
+            setText="@{message.username}"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="TextView"
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.078"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_timestamp"
             app:layout_constraintStart_toEndOf="@+id/img_profile"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/img_profile"
+            app:layout_constraintVertical_bias="0.3"
+            tools:text="@string/app_name" />
 
         <TextView
             android:id="@+id/tv_msg_preview"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="TextView"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.128"
-            app:layout_constraintStart_toEndOf="@+id/img_profile"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{message.message}"
+            app:layout_constraintEnd_toEndOf="@+id/tv_tiltle"
+            app:layout_constraintStart_toStartOf="@+id/tv_tiltle"
             app:layout_constraintTop_toBottomOf="@+id/tv_tiltle"
-            app:layout_constraintVertical_bias="0.117" />
+            tools:text="@string/app_name" />
 
         <TextView
             android:id="@+id/tv_timestamp"
+            timestamp="@{message.timestamp}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="100dp"
-            android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_mute"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.585"
-            app:layout_constraintStart_toEndOf="@+id/tv_tiltle"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.4" />
 
         <ImageView
             android:id="@+id/img_mute"
+            setVisibility="@{message.isMuted}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             app:layout_constraintEnd_toEndOf="@+id/tv_timestamp"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/tv_timestamp"
+            app:layout_constraintStart_toEndOf="@+id/tv_tiltle"
             app:layout_constraintTop_toBottomOf="@+id/tv_timestamp"
             app:srcCompat="@drawable/baseline_volume_off_24" />
 
