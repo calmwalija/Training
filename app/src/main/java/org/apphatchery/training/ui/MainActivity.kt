@@ -26,9 +26,6 @@ class MainActivity : AppCompatActivity() {
 
         val messageEntity = MessageEntity("Wiza", "Hello there")
 
-        bind.add.setOnClickListener { viewModel.upsert(messageEntity) }
-
-
 
         bind.recyclerView.apply {
             adapter = mainAdapter
