@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import org.apphatchery.training.R
 import org.apphatchery.training.Status
+import org.apphatchery.training.domain.model.Message
 
 
 @Entity
@@ -15,4 +16,8 @@ data class MessageEntity(
     val isRead: String = Status.LOADING.name,
     val timestamp: Long = System.currentTimeMillis(),
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-)
+){
+    fun toMessage():Message{
+        return Message(username,message)
+    }
+}

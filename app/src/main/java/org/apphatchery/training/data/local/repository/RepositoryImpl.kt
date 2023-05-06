@@ -1,5 +1,6 @@
 package org.apphatchery.training.data.local.repository
 
+import kotlinx.coroutines.flow.Flow
 import org.apphatchery.training.data.local.MessageDatabase
 import org.apphatchery.training.data.local.MessageEntity
 import org.apphatchery.training.domain.repository.Repository
@@ -20,7 +21,7 @@ class RepositoryImpl(
         dao.delete(message)
     }
 
-    override suspend fun query(): List<MessageEntity> {
+    override  fun query(): Flow<List<MessageEntity>> {
         return  dao.query()
     }
 }

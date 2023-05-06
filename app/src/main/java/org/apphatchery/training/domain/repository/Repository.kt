@@ -1,5 +1,6 @@
 package org.apphatchery.training.domain.repository
 
+import kotlinx.coroutines.flow.Flow
 import org.apphatchery.training.data.local.MessageEntity
 
 interface Repository {
@@ -8,6 +9,6 @@ interface Repository {
 
     suspend fun delete(message: MessageEntity)
 
-    suspend fun query(): List<MessageEntity>
+    fun query():Flow<List<MessageEntity>>
 
 }
