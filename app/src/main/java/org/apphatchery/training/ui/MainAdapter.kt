@@ -19,7 +19,7 @@ import org.apphatchery.training.databinding.ActivityMainItemBinding
 import org.apphatchery.training.domain.model.Message
 import org.apphatchery.training.domain.repository.Repository
 
-class MainAdapter : ListAdapter<Message, MainAdapter.ViewHolder>(differ) {
+class MainAdapter(private val onClickListener: OnClickListener) : ListAdapter<Message, MainAdapter.ViewHolder>(differ) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,25 +38,19 @@ class MainAdapter : ListAdapter<Message, MainAdapter.ViewHolder>(differ) {
     inner class ViewHolder(private val binding: ActivityMainItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        @OptIn(DelicateCoroutinesApi::class)
         fun onBind(message: Message) = binding.apply {
             this.message = message
             root.setOnClickListener {
-               Toast.makeText(root.context, message.username,Toast.LENGTH_SHORT).show()
-               val mes =  MessageEntity(message.username, message.message)
-                val viewModel = ViewModelProvider((root.context as AppCompatActivity))[MainViewModel::class.java]
-
-                GlobalScope.launch(Dispatchers.Main) {
-                    viewModel.delete(mes)
-
-                }
-
-                notifyDataSetChanged()
+                onClickListener.onItemClick(message)
             }
-
             executePendingBindings()
         }
     }
+
+    interface OnClickListener {
+        fun onItemClick(message: Message)
+    }
+
 
 
     companion object {

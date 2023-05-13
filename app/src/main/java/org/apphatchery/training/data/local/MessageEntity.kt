@@ -18,6 +18,7 @@ data class MessageEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
 ){
     fun toMessage():Message{
-        return Message(username,message)
+        return Message(username,message,id)
     }
+
 }

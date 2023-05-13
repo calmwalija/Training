@@ -4,5 +4,5 @@ import org.apphatchery.training.data.local.MessageEntity
 
 fun MessageEntity.toMessage():Message{
 
-    return Message(username, message)
+    return Message(username, message,id)
 }
