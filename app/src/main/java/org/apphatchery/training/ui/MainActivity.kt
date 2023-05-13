@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() ,MainAdapter.OnClickListener{
     @OptIn(DelicateCoroutinesApi::class)
     override fun onItemClick(message: Message) {
         Toast.makeText(this.applicationContext, "${message.id}", Toast.LENGTH_SHORT).show()
-        val messageEntity = MessageEntity(message.username, message.message,message.id)
+        val messageEntity = MessageEntity(username = message.username, message = message.message,id=message.id)
         GlobalScope.launch(Dispatchers.IO) {
             viewModel.delete(messageEntity)
         }
