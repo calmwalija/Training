@@ -60,11 +60,8 @@ class MainActivity : AppCompatActivity() ,MainAdapter.OnClickListener{
 
         }
         submitButton.setOnClickListener {
-            val username = usernameInput.text.toString()
-            val message = messageInput.text.toString()
-
             GlobalScope.launch(Dispatchers.IO) {
-                viewModel.upsert(MessageEntity(username, message))
+                viewModel.upsert(MessageEntity(usernameInput.text.toString(), messageInput.text.toString()))
             }
             bottomSheetDialog.dismiss()
         }
