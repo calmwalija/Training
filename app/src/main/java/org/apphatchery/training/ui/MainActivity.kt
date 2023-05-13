@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() ,MainAdapter.OnClickListener{
         super.onCreate(savedInstanceState)
         bind = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bind.root)
-
         val bottomSheetView = layoutInflater.inflate(R.layout.bottonsheet, null)
         val usernameInput = bottomSheetView.findViewById<EditText>(R.id.username_input)
         val messageInput = bottomSheetView.findViewById<EditText>(R.id.message_input)
