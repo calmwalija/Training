@@ -48,7 +48,7 @@ class MainAdapter : ListAdapter<Message, MainAdapter.ViewHolder>(differ) {
 
                 GlobalScope.launch(Dispatchers.Main) {
                     viewModel.delete(mes)
-                  
+
                 }
 
                 notifyDataSetChanged()
