@@ -11,7 +11,7 @@ class RepositoryImpl(
     private val database: MessageDatabase
 ) : Repository {
 
-    private  val dao = database.dao
+    private val dao = database.dao
 
     override suspend fun upsert(message: MessageEntity) {
         dao.upsert(message)
@@ -22,6 +22,6 @@ class RepositoryImpl(
     }
 
     override fun query(): Flow<List<MessageEntity>> {
-        return  dao.query()
+        return dao.query()
     }
 }
