@@ -1,11 +1,14 @@
 package org.apphatchery.training.ui
 
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.viewModelScope
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -24,13 +27,22 @@ import org.apphatchery.training.messages
 class MainActivity : AppCompatActivity() ,MainAdapter.OnClickListener{
 
     private val viewModel: MainViewModel by viewModels()
-
+    private lateinit var bottomSheetDialog: BottomSheetDialog
     lateinit var bind: ActivityMainBinding
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bind = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bind.root)
+
+        val bottomSheetView = layoutInflater.inflate(R.layout.bottonsheet, null)
+        val usernameInput = bottomSheetView.findViewById<EditText>(R.id.username_input)
+        val messageInput = bottomSheetView.findViewById<EditText>(R.id.message_input)
+        val submitButton = bottomSheetView.findViewById<Button>(R.id.submit_button)
+
+        bottomSheetDialog = BottomSheetDialog(this)
+        bottomSheetDialog.setContentView(bottomSheetView)
+
         val mainAdapter = MainAdapter(this)
         viewModel.viewModelScope.launch {
             viewModel.query().collect{
@@ -38,28 +50,31 @@ class MainActivity : AppCompatActivity() ,MainAdapter.OnClickListener{
             }
         }
 
-
-
         bind.recyclerView.apply {
             adapter = mainAdapter
         }
 
         val fab = bind.fab
         fab.setOnClickListener {
-            val messageEntity = MessageEntity("wiz", "hello goodmorning")
-            GlobalScope.launch(Dispatchers.IO) {
-                viewModel.upsert(messageEntity)
-            }
-        }
+            bottomSheetDialog.show()
 
+        }
+        submitButton.setOnClickListener {
+            val username = usernameInput.text.toString()
+            val message = messageInput.text.toString()
+
+            GlobalScope.launch(Dispatchers.IO) {
+                viewModel.upsert(MessageEntity(username, message))
+            }
+            bottomSheetDialog.dismiss()
+        }
     }
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onItemClick(message: Message) {
         Toast.makeText(this.applicationContext, "${message.id}", Toast.LENGTH_SHORT).show()
-        val messageEntity = MessageEntity(username = message.username, message = message.message,id=message.id)
         GlobalScope.launch(Dispatchers.IO) {
-            viewModel.delete(messageEntity)
+            viewModel.delete(MessageEntity(username = message.username, message = message.message,id=message.id))
         }
     }
 

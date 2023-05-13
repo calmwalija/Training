@@ -22,60 +22,65 @@
             setImage="@{message.avatar}"
             android:layout_width="70dp"
             android:layout_height="70dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/user" />
 
         <TextView
-            android:id="@+id/tv_tiltle"
-            setText="@{message.username}"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="16dp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tv_timestamp"
-            app:layout_constraintStart_toEndOf="@+id/img_profile"
-            app:layout_constraintTop_toTopOf="@+id/img_profile"
-            app:layout_constraintVertical_bias="0.3"
-            tools:text="@string/app_name" />
-
-        <TextView
             android:id="@+id/tv_msg_preview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="8dp"
+
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/black"
             android:text="@{message.message}"
-            app:layout_constraintEnd_toEndOf="@+id/tv_tiltle"
-            app:layout_constraintStart_toStartOf="@+id/tv_tiltle"
-            app:layout_constraintTop_toBottomOf="@+id/tv_tiltle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_profile"
             tools:text="@string/app_name" />
 
         <TextView
             android:id="@+id/tv_timestamp"
             timestamp="@{message.timestamp}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/img_mute"
+            android:layout_width="114dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="22dp"
+            app:layout_constraintBottom_toTopOf="@+id/img_mute"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.529"
+            app:layout_constraintStart_toEndOf="@+id/tv_tiltle"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.4" />
+            app:layout_constraintVertical_bias="0.315" />
+
+        <TextView
+            android:id="@+id/tv_tiltle"
+            setText="@{message.username}"
+            android:layout_width="147dp"
+            android:layout_height="19dp"
+
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tv_msg_preview"
+            app:layout_constraintStart_toEndOf="@+id/img_profile"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.066"
+            tools:text="@string/app_name" />
 
         <ImageView
             android:id="@+id/img_mute"
             setVisibility="@{message.isMuted}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/tv_timestamp"
-            app:layout_constraintStart_toEndOf="@+id/tv_tiltle"
-            app:layout_constraintTop_toBottomOf="@+id/tv_timestamp"
-            app:srcCompat="@drawable/baseline_volume_off_24" />
+            app:srcCompat="@drawable/baseline_volume_off_24"
+            tools:layout_editor_absoluteX="345dp"
+            tools:layout_editor_absoluteY="40dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
