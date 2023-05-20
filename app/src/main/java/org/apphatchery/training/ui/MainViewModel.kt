@@ -26,10 +26,6 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun query() {
-        viewModelScope.launch {
-            repository.query()
-        }
-    }
+    val query = repository.query()
 
 }

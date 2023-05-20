@@ -44,7 +44,7 @@
 
         <TextView
             android:id="@+id/tv_msg_preview"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
@@ -62,7 +62,7 @@
             android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="@+id/img_mute"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_tiltle"
             app:layout_constraintVertical_bias="0.4" />
 
         <ImageView
@@ -70,6 +70,8 @@
             setVisibility="@{message.isMuted}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_msg_preview"
             app:layout_constraintEnd_toEndOf="@+id/tv_timestamp"
             app:layout_constraintStart_toEndOf="@+id/tv_tiltle"
             app:layout_constraintTop_toBottomOf="@+id/tv_timestamp"
