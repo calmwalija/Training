@@ -44,8 +44,8 @@
 
         <TextView
             android:id="@+id/tv_msg_preview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="291dp"
+            android:layout_height="25dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{message.message}"

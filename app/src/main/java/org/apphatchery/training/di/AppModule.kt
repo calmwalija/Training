@@ -37,9 +37,10 @@ object AppModule {
 
     @Provides
     fun providesRepository(
-        database: MessageDatabase
+        database: MessageDatabase,
+        remoteDataSource: CommentsRemoteDataSource
     ): Repository {
-        return RepositoryImpl(database)
+        return RepositoryImpl(database,remoteDataSource)
     }
 
     @Singleton
