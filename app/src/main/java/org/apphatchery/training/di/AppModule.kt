@@ -9,7 +9,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import org.apphatchery.training.data.local.MessageDatabase
 import org.apphatchery.training.data.local.repository.RepositoryImpl
+import org.apphatchery.training.data.remote.CommentsRemoteDataSource
 import org.apphatchery.training.domain.repository.Repository
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 
@@ -37,5 +40,14 @@ object AppModule {
         database: MessageDatabase
     ): Repository {
         return RepositoryImpl(database)
+    }
+
+    @Singleton
+    @Provides
+    fun providesRetrofit(): CommentsRemoteDataSource {
+        return Retrofit.Builder()
+            .baseUrl(CommentsRemoteDataSource.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build().create(CommentsRemoteDataSource::class.java)
     }
 }
