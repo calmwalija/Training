@@ -1,4 +1,4 @@
-package org.apphatchery.training.data.local
+package org.apphatchery.training.data.local.message
 
 import androidx.room.Dao
 import androidx.room.Delete

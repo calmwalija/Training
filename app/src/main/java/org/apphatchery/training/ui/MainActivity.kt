@@ -1,18 +1,14 @@
 package org.apphatchery.training.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import org.apphatchery.training.R
-import org.apphatchery.training.Utils
-import org.apphatchery.training.data.local.MessageEntity
+import org.apphatchery.training.data.local.message.MessageEntity
 import org.apphatchery.training.databinding.ActivityMainBinding
-import org.apphatchery.training.messages
-import org.apphatchery.training.toMessage
 
 
 @AndroidEntryPoint
@@ -35,11 +31,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.viewModelScope.launch {
-            viewModel.query.collect(){
-                mainAdapter.submitList(it.map { messageEntity ->
-                    messageEntity.toMessage()
-                    }
-                )
+            viewModel.query.collect {
+
+                Log.e("TAG", "onCreate: " + it.toString())
+
+
+//                mainAdapter.submitList(it.map { messageEntity ->
+//                    messageEntity.toMessage()
+//                    }
+//                )
             }
         }
 
