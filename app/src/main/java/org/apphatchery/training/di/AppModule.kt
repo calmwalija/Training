@@ -7,9 +7,13 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import org.apphatchery.training.data.local.MessageDatabase
-import org.apphatchery.training.data.local.repository.RepositoryImpl
-import org.apphatchery.training.domain.repository.Repository
+import org.apphatchery.training.data.local.Database
+import org.apphatchery.training.data.local.comment.CommentRepositoryImpl
+import org.apphatchery.training.data.local.message.MessageRepositoryImpl
+import org.apphatchery.training.data.remote.RemoteSource
+import org.apphatchery.training.domain.repository.BaseRepo
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 
@@ -27,15 +31,27 @@ object AppModule {
     @Provides
     fun providesDatabase(
         @ApplicationContext context: Context
-    ): MessageDatabase {
-        return Room.databaseBuilder(context, MessageDatabase::class.java, MessageDatabase.DB_NAME)
+    ): Database {
+        return Room.databaseBuilder(context, Database::class.java, Database.DB_NAME)
             .build()
     }
 
     @Provides
-    fun providesRepository(
-        database: MessageDatabase
-    ): Repository {
-        return RepositoryImpl(database)
-    }
+    fun providesRepositoryImpl(
+        db: Database,
+        api: RemoteSource
+    ) = BaseRepo(
+        CommentRepositoryImpl(db, api),
+        MessageRepositoryImpl(db)
+    )
+
+    @Provides
+    @Singleton
+    fun providesRemoteSource(): RemoteSource =
+        Retrofit.Builder()
+            .baseUrl(RemoteSource.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(RemoteSource::class.java)
+
 }
