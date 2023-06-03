@@ -6,10 +6,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.apphatchery.training.databinding.ActivityMainItemBinding
-import org.apphatchery.training.domain.model.Message
+import org.apphatchery.training.domain.model.Comment
 
-class MainAdapter : ListAdapter<Message, MainAdapter.ViewHolder>(differ) {
+class MainAdapter : ListAdapter<Comment, MainAdapter.ViewHolder>(diff) {
 
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val comment = getItem(position)
+        holder.bind(comment)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -19,34 +23,27 @@ class MainAdapter : ListAdapter<Message, MainAdapter.ViewHolder>(differ) {
         )
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(getItem(position))
-    }
-
-
-    inner class ViewHolder(private val binding: ActivityMainItemBinding) :
+    class ViewHolder(private val binding: ActivityMainItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun onBind(message: Message) = binding.apply {
-            this.message = message
-            executePendingBindings()
+        fun bind(comment: Comment) {
+            binding.tvTiltle.text = comment.name
+            binding.tvMsgPreview.text = comment.body
         }
     }
 
-
     companion object {
-        val differ = object : DiffUtil.ItemCallback<Message>() {
+        private val diff = object : DiffUtil.ItemCallback<Comment>() {
 
-            override fun areContentsTheSame(oldItem: Message, newItem: Message): Boolean {
+            override fun areItemsTheSame(oldItem: Comment, newItem: Comment): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: Comment, newItem: Comment): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areItemsTheSame(oldItem: Message, newItem: Message): Boolean {
-                return oldItem.username == newItem.username
-            }
         }
-
     }
-
 
 }
